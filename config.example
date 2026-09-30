@@ -1,0 +1,11 @@
+# Saved as ~/.caffeinate-agents/config; preserved when reinstalling/upgrading.
+# This file is sourced by Bash. Use shell assignments, and only trusted content.
+# Environment variables override these settings.
+
+AGENT_PROCESSES="claude codex gemini opencode copilot aider cursor-agent"
+# Add exact executable names here. Avoid generic runtimes such as node/python
+# and GUI apps: they would hold your Mac awake whenever those processes exist.
+EXTRA_AGENT_PROCESSES=""
+BATTERY_FLOOR=10
+INTERVAL=10
+HOLD=25
