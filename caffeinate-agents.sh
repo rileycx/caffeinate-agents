@@ -145,7 +145,7 @@ watch() {
     identity=$(ps -p "$target" -o lstart=) || return 0
     [ "$INTERVAL" -le 2 ] || INTERVAL=2
   elif [ "$mode" = timed ]; then
-    deadline=$(($(date +%s) + target))
+    deadline=$((SECONDS + target))
   fi
   RUN_DIR="$APP_DIR/run/$$"
   mkdir -p "$RUN_DIR" || die "Cannot create $RUN_DIR"
@@ -160,7 +160,7 @@ watch() {
         detail="command (PID $target)"
         ;;
       timed)
-        remaining=$((deadline - $(date +%s)))
+        remaining=$((deadline - SECONDS))
         [ "$remaining" -gt 0 ] || break
         [ "$nap" -le "$remaining" ] || nap="$remaining"
         detail="timed hold ($remaining seconds remaining)"

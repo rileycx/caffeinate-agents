@@ -180,9 +180,11 @@ class WatcherTests(unittest.TestCase):
         self.assertEqual(self.run_cli("--check", env=dict(env, AGENT_PROCESSES="")).stdout, "")
 
     def test_timed_hold_and_status_expiry(self):
+        started = time.monotonic()
         watcher = self.start("--hold", "1")
         self.wait_for(lambda: "Awake: timed hold" in self.status())
         self.assertEqual(watcher.wait(timeout=4), 0)
+        self.assertGreaterEqual(time.monotonic() - started, 0.9)
         self.assertNotIn("Awake:", self.status())
         stale = self.app / "run" / "stale"
         stale.mkdir(parents=True)
