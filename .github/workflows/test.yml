@@ -1,0 +1,21 @@
+name: Test
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check shell syntax
+        run: |
+          for script in caffeinate-agents.sh install.sh uninstall.sh swiftbar/caffeinate-agents.10s.sh; do
+            bash -n "$script"
+          done
+      - name: Run regression tests
+        run: python3 -m unittest discover -s tests -v
